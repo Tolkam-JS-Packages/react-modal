@@ -138,7 +138,7 @@ export default class Modal extends PureComponent<IProps, IState> {
 
         if (!props.noBackdrop) {
             backdrop = <Animatable {...animationAwareProps} className={bdClassName} classPrefix={bdClassName + '-'}>
-                <div onClick={that.onClick} />
+                <div onClick={!props.noBackdropClicks ? that.onClick : undefined} />
             </Animatable>;
         }
 
@@ -464,6 +464,9 @@ export interface IProps extends React.HTMLAttributes<Modal> {
 
     // issue "onCloseRequest" on document clicks
     withDocumentClicks?: boolean,
+
+    // do not issue "onCloseRequest" on backdrop clicks
+    noBackdropClicks?: boolean,
 
     // element class names
     classNameBody?: string,
