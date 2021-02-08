@@ -10,12 +10,10 @@
         "react-dom": "^16.5.2",
         "@tolkam/lib-utils-ui": "file:D:/dev-packages/js/tolkam/lib-utils-ui",
         "@tolkam/react-portal": "file:D:/dev-packages/js/tolkam/react-portal",
-        "react-transition-group": "^2.5.0",
         "@tolkam/react-animatable": "file:D:/dev-packages/js/tolkam/react-animatable"
     },
     "devDependencies": {
         "tslib": "^1.9.3",
-        "@types/react": "^16.4",
-        "@types/react-transition-group": "^2.0.14"
+        "@types/react": "^16.4"
     }
 }
