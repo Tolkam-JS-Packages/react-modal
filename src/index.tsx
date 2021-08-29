@@ -119,9 +119,11 @@ export default class Modal extends PureComponent<IProps, IState> {
     public render() {
         const that = this;
         const props = that.props;
-        const className = props.className || 'modal';
-        const bdClassName = props.classNameBackdrop || className + '__backdrop';
-        const bodyClassName = props.classNameBody || className + '__body';
+        const className = props.className ?? 'modal';
+        const bdClassName = props.classNameBackdrop ?? className + '__backdrop';
+        const bodyClassName = props.classNameBody ?? className + '__body';
+        const bodyAnimationsPrefix = props.classPrefixBody ?? (bodyClassName + '-');
+        const bdAnimationsPrefix = props.classPrefixBackdrop ?? (bdClassName + '-');
         const stage = that.state.stage;
         let backdrop: any;
 
@@ -137,14 +139,14 @@ export default class Modal extends PureComponent<IProps, IState> {
         };
 
         if (!props.noBackdrop) {
-            backdrop = <Animatable {...animationAwareProps} className={bdClassName} classPrefix={bdClassName + '-'}>
+            backdrop = <Animatable {...animationAwareProps} className={bdClassName} classPrefix={bdAnimationsPrefix}>
                 <div onClick={!props.noBackdropClicks ? that.onClick : undefined} />
             </Animatable>;
         }
 
         return <Portal to={that.parent} ref={(r) => r ? that.portal = r : null}>
             <div className={className} tabIndex={-1}>
-                <Animatable {...animationAwareProps} className={bodyClassName} classPrefix={bodyClassName + '-'}>
+                <Animatable {...animationAwareProps} className={bodyClassName} classPrefix={bodyAnimationsPrefix}>
                     <div>{props.children}</div>
                 </Animatable>
                 {backdrop}
@@ -471,6 +473,10 @@ export interface IProps extends React.HTMLAttributes<Modal> {
     // element class names
     classNameBody?: string,
     classNameBackdrop?: string,
+
+    // animations prefixes
+    classPrefixBody?: string,
+    classPrefixBackdrop?: string,
 
     // when close requested by mouse or keyboard
     onCloseRequest?: () => any,
