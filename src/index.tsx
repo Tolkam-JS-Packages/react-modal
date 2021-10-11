@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
-import { scrollbarWidth, disableScroll } from '@tolkam/lib-utils-ui';
+import { disableScroll } from '@tolkam/lib-utils-ui';
 import Portal from '@tolkam/react-portal';
 import Animatable from '@tolkam/react-animatable';
 
@@ -8,6 +8,7 @@ const DOCUMENT = document;
 const ROOT = DOCUMENT.documentElement;
 const BODY = DOCUMENT.body;
 const STYLE_CACHE_KEY = 'modalStyleCache';
+const SCROLL_DISABLER_KEY = 'scrollDisabledBy';
 
 const OPENING = 'OPENING';
 const OPENED = 'OPENED';
@@ -301,6 +302,7 @@ export default class Modal extends PureComponent<IProps, IState> {
 
         if(dataset[STYLE_CACHE_KEY] == null) {
             dataset[STYLE_CACHE_KEY] = disableScroll(target);
+            dataset[SCROLL_DISABLER_KEY] = this.id.toString();
         }
     }
 
@@ -315,13 +317,14 @@ export default class Modal extends PureComponent<IProps, IState> {
         const target = parent === BODY ? ROOT : parent;
         const { dataset, style } = target;
 
-        if(that.childrenCount() !== 0) {
+        if(dataset[SCROLL_DISABLER_KEY] !== that.id.toString()) {
             return;
         }
 
         if(dataset[STYLE_CACHE_KEY] != null) {
             style.cssText = dataset[STYLE_CACHE_KEY] || '';
             delete dataset[STYLE_CACHE_KEY];
+            delete dataset[SCROLL_DISABLER_KEY];
         }
 
         if(!style.cssText) {
@@ -430,17 +433,6 @@ export default class Modal extends PureComponent<IProps, IState> {
         const ids = parents.get(that.parent);
 
         return ids != null && ids[0] === that.id;
-    }
-
-    /**
-     * Gets parents children count
-     *
-     * @returns {boolean}
-     */
-    private childrenCount() {
-        const context = parents.get(this.parent);
-
-        return context ? context.length : 0;
     }
 }
 
