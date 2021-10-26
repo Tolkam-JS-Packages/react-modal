@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { PureComponent } from 'react';
+import { PureComponent, HTMLProps } from 'react';
 import { disableScroll } from '@tolkam/lib-utils-ui';
 import Portal from '@tolkam/react-portal';
 import Animatable from '@tolkam/react-animatable';
@@ -404,7 +403,7 @@ export default class Modal extends PureComponent<IProps, IState> {
     }
 
     /**
-     * Deregisters self from parent children
+     * De-registers self from parent children
      *
      * @returns {void}
      */
@@ -436,7 +435,7 @@ export default class Modal extends PureComponent<IProps, IState> {
     }
 }
 
-export interface IProps extends React.HTMLAttributes<Modal> {
+export interface IProps extends HTMLProps<Modal> {
 
     // whether to show the modal
     show: boolean,
