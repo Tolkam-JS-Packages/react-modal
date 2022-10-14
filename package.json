@@ -1,6 +1,7 @@
 {
     "name": "@tolkam/react-modal",
     "description": "Component for building modal windows",
+    "version": "0.0.0",
     "browser": "src/index.tsx",
     "types": "src/index.tsx",
     "license": "UNLICENSED",
